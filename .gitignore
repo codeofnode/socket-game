@@ -6,6 +6,8 @@ root/package.json
 root/server.json
 docs
 /server.json
+/client.json
+/j2c.json
 /j2s.json
 /server.js
 .npm

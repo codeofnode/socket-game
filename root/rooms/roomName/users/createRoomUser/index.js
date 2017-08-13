@@ -28,7 +28,7 @@ module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VA
       userName: vars.user,
       roomName: vars.params.path.roomName,
     };
-    GLOBAL_APP_CONFIG.$store.write('roomuser', 0, data).then(() => {
+    GLOBAL_APP_CONFIG.$store.write('roomuser', `${data.userName}_${data.roomName}`, data).then(() => {
       next(data);
       uponRoomUser(data).then(noop).catch(error);
     }).catch(next.bind(res, 500));

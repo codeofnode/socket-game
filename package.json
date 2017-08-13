@@ -6,7 +6,8 @@
   "scripts": {
     "start": "./node_modules/.bin/nodemon --watch root --exec \"./node_modules/.bin/babel-node ./node_modules/.bin/json2server\"",
     "bstart": "./node_modules/.bin/nodemon blocks --exec node_modules/.bin/babel-node",
-    "build": "rm -rf dist && mkdir dist && mkdir dist/root && ./node_modules/.bin/json -f package.json -e \"delete this.devDependencies;delete this.scripts;delete this.nyc;delete this.babel\" > dist/package.json && ./node_modules/.bin/babel root -d dist/root && node_modules/.bin/babel-node blocks && cp README.md server.json j2s.json dist/ && npm run mbuild",
+    "client": "node_modules/.bin/babel-node client",
+    "build": "rm -rf dist && mkdir dist && mkdir dist/root && ./node_modules/.bin/json -f package.json -e \"delete this.devDependencies;delete this.scripts;delete this.nyc;delete this.babel; this.scripts = { start: './node_modules/.bin/json2server', client: 'node client' };\" > dist/package.json && ./node_modules/.bin/babel root -d dist/root && node_modules/.bin/babel-node blocks && cp README.md server.json j2s.json dist/ && npm run mbuild && mv dist/modules/client dist/client && mv client.json dist/client/package.json && mv j2c.json dist/client/",
     "mbuild": "mkdir -p dist/modules && ./node_modules/.bin/babel modules -d dist/modules",
     "prodtest": "TEST_DIR=dist/root npm run test",
     "test": "./node_modules/.bin/cross-env NODE_ENV=test ./node_modules/.bin/nyc ./node_modules/.bin/mocha -b test/**",
@@ -50,7 +51,6 @@
     "istanbul": "^0.4.5",
     "jsdoc": "^3.5.1",
     "json": "^9.0.6",
-    "json2server": "^0.1.17",
     "minami": "^1.2.3",
     "mocha": "^3.4.2",
     "nodemon": "^1.11.0",
@@ -94,7 +94,9 @@
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",
+    "json2server": "^0.1.18",
     "socket.io": "^2.0.3",
+    "socket.io-client": "^2.0.3",
     "util.promisify": "^1.0.0"
   }
 }

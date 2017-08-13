@@ -23,7 +23,7 @@ class Guess extends EventEmitter {
     super();
     this.scores = { };
     this.noOfUsers = users.length;
-    this.notifyTime = 5000;
+    this.notifyTime = 5;
     this.notifier = notifier;
     users.forEach((us) => {
       this.scores[us] = 0;
@@ -39,7 +39,7 @@ class Guess extends EventEmitter {
       this.emit('question', 'Guess the number between from 1 to 26 ?');
       this.actual = Math.floor(Math.random() * 26);
       this.notifier.on('answer', this.handleAnswer.bind(this));
-    }, this.notifyTime);
+    }, this.notifyTime * 1000);
   }
 
   /**
