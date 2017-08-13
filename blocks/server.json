@@ -9,13 +9,10 @@
     },
     "users": {
       "$post": {
-        "=": [{
+        "=": {
           "eval": "{{params.body.username}}",
           "ifFailed": "EMAIL_MISS"
-        }, {
-          "eval": "{{params.body.password}}",
-          "ifFailed": "PASS_MISS"
-        }],
+        },
         "@" : "createUser"
       }
     },
@@ -26,12 +23,12 @@
     },
     "rooms": {
       "+": {
-        "user": {
+        "currentuser": {
           "@": "fetchCurrentUser"
         }
       },
       "=": [{
-        "eval": "{{user}}",
+        "eval": "{{currentuser}}",
         "ifFailed": "AUTH_FAILED"
       }],
       "$post": {
