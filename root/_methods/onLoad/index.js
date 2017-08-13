@@ -15,7 +15,8 @@ module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VA
 
   GLOBAL_APP_CONFIG.$store = new (GLOBAL_METHODS.$import('.store'))(['game', 'user', 'room', 'roomuser']);
 
-  function func(vars, methods, req, res) {
+  function func() {
   }
+
   return func;
 };

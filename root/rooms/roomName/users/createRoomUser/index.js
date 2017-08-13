@@ -4,12 +4,10 @@ module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VA
   const { noop } = GLOBAL_METHODS.$import('.util');
   const { error } = GLOBAL_METHODS.$import('.logger');
 
-  const noOfPlayers = GLOBAL_APP_CONFIG.noOfPlayers || 2;
-
-  async function uponRoomUser(col, data) {
-    const ar = await GLOBAL_APP_CONFIG.$store.list(col);
-    if (ar.length === noOfPlayers) {
-      const room = await GLOBAL_APP_CONFIG.$store.read('room', data.roomName);
+  async function uponRoomUser(data) {
+    const ar = await GLOBAL_APP_CONFIG.$store.list('roomuser');
+    const room = await GLOBAL_APP_CONFIG.$store.read('room', data.roomName);
+    if (room && ar.length === room.noOfPlayers) {
       const users =
         (await Promise.all(ar.map(rm => GLOBAL_APP_CONFIG.$store.read('roomuser', rm))))
         .map(us => us.userName);
@@ -25,20 +23,15 @@ module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VA
     }
   }
 
-  GLOBAL_APP_CONFIG.$store.on('W', (col, id, data) => {
-    if (col === 'roomuser') {
-      uponRoomUser(col, data).then(noop).catch(error);
-    }
-  });
-
-  GLOBAL_APP_CONFIG.$store.on('D', (col, id) => {
-  });
-
-  function func(vars, methods, req, res) {
-    GLOBAL_APP_CONFIG.$store.write('roomuser', 0, {
+  function func(vars, methods, req, res, next) {
+    const data = {
       userName: vars.user,
       roomName: vars.params.path.roomName,
-    }).then(next);
+    };
+    GLOBAL_APP_CONFIG.$store.write('roomuser', 0, data).then(() => {
+      next(data);
+      uponRoomUser(data).then(noop).catch(error);
+    }).catch(next.bind(res, 500));
   }
 
   return func;

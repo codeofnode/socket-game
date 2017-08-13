@@ -93,7 +93,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",
-    "engine.io": "^3.1.0",
+    "socket.io": "^2.0.3",
     "util.promisify": "^1.0.0"
   }
 }
