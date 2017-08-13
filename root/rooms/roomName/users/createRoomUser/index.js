@@ -1,8 +1,8 @@
 /* eslint no-unused-vars:0 */
 
 module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VARS, GLOBAL_API) {
-  const { noop } = GLOBAL_METHODS.$import('.util');
-  const { error } = GLOBAL_METHODS.$import('.logger');
+  const { noop } = global.AppImport('.util');
+  const { error } = global.AppImport('.logger');
 
   async function uponRoomUser(data) {
     const ar = await GLOBAL_APP_CONFIG.$store.list('roomuser');
@@ -11,8 +11,8 @@ module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VA
       const users =
         (await Promise.all(ar.map(rm => GLOBAL_APP_CONFIG.$store.read('roomuser', rm))))
         .map(us => us.userName);
-      const notifier = new GLOBAL_METHODS.$import('.socket')(data.roomName);
-      const game = new GLOBAL_METHODS.$import(`./games/${room.gameName}`)(users, notifier);
+      const notifier = new global.AppImport('.socket')(data.roomName);
+      const game = new global.AppImport(`./games/${room.gameName}`)(users, notifier);
       game.once('start', notifier.notifyAll.bind(notifier, 'start'));
       game.once('end', (winner, actual) => {
         notifier.notifyAll('end', winner, actual);

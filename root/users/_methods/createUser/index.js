@@ -2,7 +2,7 @@
 
 module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VARS, GLOBAL_API) {
   async function main(vars, res) {
-    // const pass = await GLOBAL_METHODS.$import('.util').encrypt(vars.params.body.password);
+    // const pass = await global.AppImport('.util').encrypt(vars.params.body.password);
     const payload = { joined: (new Date()).getTime() };
     await GLOBAL_APP_CONFIG.$store.write('user', vars.params.body.username, payload);
     return payload;

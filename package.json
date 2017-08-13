@@ -4,7 +4,8 @@
   "description": "A simple socket based game",
   "bin": "server.js",
   "scripts": {
-    "start": "./node_modules/.bin/nodemon blocks --exec node_modules/.bin/babel-node & ./node_modules/.bin/nodemon --watch root --exec \"./node_modules/.bin/babel-node ./node_modules/.bin/json2server\"",
+    "start": "./node_modules/.bin/nodemon --watch root --exec \"./node_modules/.bin/babel-node ./node_modules/.bin/json2server\"",
+    "bstart": "./node_modules/.bin/nodemon blocks --exec node_modules/.bin/babel-node",
     "build": "rm -rf dist && mkdir dist && mkdir dist/root && ./node_modules/.bin/json -f package.json -e \"delete this.devDependencies;delete this.scripts;delete this.nyc;delete this.babel\" > dist/package.json && ./node_modules/.bin/babel root -d dist/root && node_modules/.bin/babel-node blocks && cp README.md server.json j2s.json dist/ && npm run mbuild",
     "mbuild": "mkdir -p dist/modules && ./node_modules/.bin/babel modules -d dist/modules",
     "prodtest": "TEST_DIR=dist/root npm run test",

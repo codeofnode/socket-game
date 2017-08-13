@@ -3,7 +3,7 @@
 module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VARS, GLOBAL_API) {
   const rootDir = `${process.cwd()}/${(GLOBAL_APP_CONFIG && GLOBAL_APP_CONFIG.moduledir) || 'modules'}/`;
 
-  GLOBAL_METHODS.$import = function internalImport(name) { // eslint-disable-line no-param-reassign
+  global.AppImport = function internalImport(name) { // eslint-disable-line no-param-reassign
     let toRet;
     if (typeof name === 'string') {
       if (['/', '.'].indexOf(name.charAt(0)) === -1) {
@@ -18,7 +18,7 @@ module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VA
   };
 
   GLOBAL_APP_CONFIG.$store = // eslint-disable-line no-param-reassign
-    new (GLOBAL_METHODS.$import('.store'))(['game', 'user', 'room', 'roomuser']);
+    new (global.AppImport('.store'))(['game', 'user', 'room', 'roomuser']);
 
   function func() {
   }
