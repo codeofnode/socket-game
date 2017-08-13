@@ -4,13 +4,17 @@ module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VA
   const rootDir = `${process.cwd()}/${(GLOBAL_APP_CONFIG && GLOBAL_APP_CONFIG.moduledir) || 'modules'}/`;
 
   GLOBAL_METHODS.$import = function internalImport(name) { // eslint-disable-line no-param-reassign
+    let toRet;
     if (typeof name === 'string') {
       if (['/', '.'].indexOf(name.charAt(0)) === -1) {
-        return require(name);
+        toRet = require(name);
+      } else {
+        toRet = require(rootDir + name.substring(1));
       }
-      return require(rootDir + name.substring(1));
+    } else {
+      toRet = require(name);
     }
-    return require(name);
+    return toRet.default ? toRet.default : toRet;
   };
 
   GLOBAL_APP_CONFIG.$store = // eslint-disable-line no-param-reassign
