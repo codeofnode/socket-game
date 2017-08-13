@@ -1,0 +1,12 @@
+npm-debug.log*
+node_modules/
+.nyc_output/
+coverage/
+root/package.json
+root/server.json
+docs
+server.json
+j2s.json
+server.js
+.npm
+dist
