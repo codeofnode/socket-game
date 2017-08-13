@@ -2,6 +2,7 @@
 
 module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VARS, GLOBAL_API) {
   const rootDir = `${process.cwd()}/${(GLOBAL_APP_CONFIG && GLOBAL_APP_CONFIG.moduledir) || 'modules'}/`;
+
   GLOBAL_METHODS.$import = function internalImport(name) { // eslint-disable-line no-param-reassign
     if (typeof name === 'string') {
       if (['/', '.'].indexOf(name.charAt(0)) === -1) {
@@ -11,6 +12,9 @@ module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VA
     }
     return require(name);
   };
+
+  GLOBAL_APP_CONFIG.store = new (GLOBAL_METHODS.$import('.store'))(['game', 'user', 'room', 'rootuser']);
+
   function func(vars, methods, req, res) {
   }
   return func;
