@@ -1,0 +1,76 @@
+{
+  "vars": {
+    "contactEmail": "codeofnode@gmail.com"
+  },
+  "root": {
+    "$": {
+      "name": "{{pkg.name}}",
+      "version": "{{pkg.version}}"
+    },
+    "users": {
+      "$post": {
+        "=": [{
+          "eval": "{{params.body.username}}",
+          "ifFailed": {
+            "_":"Email is missing",
+            "code":"EMAIL_MISS",
+            "status":400
+          }
+        }, {
+          "eval": "{{params.body.password}}",
+          "ifFailed": {
+            "_":"Password is missing",
+            "code":"PASS_MISS",
+            "status":400
+          }
+        }],
+        "@" : "createUser"
+      }
+    },
+    "games": {
+      "$": {
+        "@": "listGames"
+      }
+    },
+    "rooms": {
+      "+": {
+        "user": {
+          "@": "fetchCurrentUser"
+        }
+      },
+      "=": [{
+        "eval": "{{user}}",
+        "ifFailed": {
+          "_": "Authentication failed.",
+          "code":"AUTH_FAILED",
+          "status":400
+        }
+      }],
+      "$post": {
+        "=": [{
+          "eval": "{{params.body.gameName}}",
+          "ifFailed": {
+            "_":"Game is missing",
+            "code":"GID_MISS",
+            "status":400
+          }
+        }, {
+          "eval": "{{params.body.roomName}}",
+          "ifFailed": {
+            "_":"Room name is missing",
+            "code":"GID_MISS",
+            "status":400
+          }
+        }],
+        "@" : "createRoom"
+      },
+      ":roomName": {
+        "users": {
+          "$post": {
+            "@" : "createRoomUser"
+          }
+        }
+      }
+    }
+  }
+}

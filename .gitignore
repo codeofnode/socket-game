@@ -5,8 +5,8 @@ coverage/
 root/package.json
 root/server.json
 docs
-server.json
-j2s.json
-server.js
+/server.json
+/j2s.json
+/server.js
 .npm
 dist
