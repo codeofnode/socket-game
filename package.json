@@ -1,7 +1,7 @@
 {
-  "name": "game",
+  "name": "socket-game",
   "version": "0.0.0",
-  "description": "A simple game",
+  "description": "A simple socket based game",
   "bin": "server.js",
   "scripts": {
     "start": "./node_modules/.bin/nodemon blocks --exec node_modules/.bin/babel-node & ./node_modules/.bin/nodemon --watch root --exec \"./node_modules/.bin/babel-node ./node_modules/.bin/json2server\"",
@@ -16,21 +16,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/codeofnode/game.git"
+    "url": "git+ssh://git@github.com/codeofnode/socket-game.git"
   },
   "keywords": [
     "server",
     "game",
     "lightweight",
     "cli",
-    "apis"
+    "socket"
   ],
   "author": "Ramesh Kumar <codeofnode@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/codeofnode/game/issues"
+    "url": "https://github.com/codeofnode/socket-game/issues"
   },
-  "homepage": "https://github.com/codeofnode/game",
+  "homepage": "https://github.com/codeofnode/socket-game",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-plugin-istanbul": "^4.1.3",
