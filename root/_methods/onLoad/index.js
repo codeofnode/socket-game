@@ -13,7 +13,7 @@ module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VA
     return require(name);
   };
 
-  GLOBAL_APP_CONFIG.store = new (GLOBAL_METHODS.$import('.store'))(['game', 'user', 'room', 'rootuser']);
+  GLOBAL_APP_CONFIG.$store = new (GLOBAL_METHODS.$import('.store'))(['game', 'user', 'room', 'rootuser']);
 
   function func(vars, methods, req, res) {
   }

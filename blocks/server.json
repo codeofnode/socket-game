@@ -11,18 +11,10 @@
       "$post": {
         "=": [{
           "eval": "{{params.body.username}}",
-          "ifFailed": {
-            "_":"Email is missing",
-            "code":"EMAIL_MISS",
-            "status":400
-          }
+          "ifFailed": "EMAIL_MISS"
         }, {
           "eval": "{{params.body.password}}",
-          "ifFailed": {
-            "_":"Password is missing",
-            "code":"PASS_MISS",
-            "status":400
-          }
+          "ifFailed": "PASS_MISS"
         }],
         "@" : "createUser"
       }
@@ -40,27 +32,15 @@
       },
       "=": [{
         "eval": "{{user}}",
-        "ifFailed": {
-          "_": "Authentication failed.",
-          "code":"AUTH_FAILED",
-          "status":400
-        }
+        "ifFailed": "AUTH_FAILED"
       }],
       "$post": {
         "=": [{
           "eval": "{{params.body.gameName}}",
-          "ifFailed": {
-            "_":"Game is missing",
-            "code":"GID_MISS",
-            "status":400
-          }
+          "ifFailed": "GAME_MISS"
         }, {
           "eval": "{{params.body.roomName}}",
-          "ifFailed": {
-            "_":"Room name is missing",
-            "code":"GID_MISS",
-            "status":400
-          }
+          "ifFailed": "ROOM_MISS"
         }],
         "@" : "createRoom"
       },
