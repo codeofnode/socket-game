@@ -5,7 +5,7 @@ export function pick(o, ...props) {
 }
 
 export function encrypt(abc) {
-  return new Promise((res, rej) => {
+  return new Promise((res) => {
     res(String(abc));
   });
 }

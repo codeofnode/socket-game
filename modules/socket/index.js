@@ -52,7 +52,7 @@ class Store extends EventEmitter {
    * @param {string} ev - the event to send
    * @param {*} ...data - the infomation to sent via web socket
    */
-  notifyAll(ev ...data) {
+  notifyAll(ev, ...data) {
     this.room.emit(ev, ...data);
   }
 
@@ -60,7 +60,7 @@ class Store extends EventEmitter {
    * remove the events before removing the instance
    * @param {string} ev - the event to send
    */
-  removeAllListeners(ev){
+  removeAllListeners(ev) {
     super.removeAllListeners(ev);
     SERVER.removeAllListeners('connection');
   }
