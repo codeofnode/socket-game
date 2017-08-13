@@ -52,7 +52,7 @@ class Guess extends EventEmitter {
       const num = parseInt(val, 10);
       if (isNaN(num)) {
         this.scores[user] -= 2;
-      } else if(num === this.actual) {
+      } else if (num === this.actual) {
         this.scores[user] += num;
       } else {
         this.scores[user] -= Math.abs(num - this.actual);

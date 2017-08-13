@@ -13,7 +13,8 @@ module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VA
     return require(name);
   };
 
-  GLOBAL_APP_CONFIG.$store = new (GLOBAL_METHODS.$import('.store'))(['game', 'user', 'room', 'roomuser']);
+  GLOBAL_APP_CONFIG.$store = // eslint-disable-line no-param-reassign
+    new (GLOBAL_METHODS.$import('.store'))(['game', 'user', 'room', 'roomuser']);
 
   function func() {
   }
