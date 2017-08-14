@@ -12,7 +12,7 @@ $ npm start
 $ npm test
 ```
 
-## How to build, running lint, docs everything
+## How to test, finding coverage, build, running lint, docs everything
 ```
 $ npm run all
 ```
