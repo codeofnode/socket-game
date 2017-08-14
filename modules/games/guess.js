@@ -24,10 +24,22 @@ class Guess extends EventEmitter {
     this.scores = { };
     this.noOfUsers = users.length;
     this.notifyTime = 5;
+    this.totalTime = 15;
     this.notifier = notifier;
     users.forEach((us) => {
       this.scores[us] = 0;
     });
+  }
+
+  /**
+   * Add a user
+   * @param {string} username - the username of user to be added
+   */
+  addUser(username) {
+    if (this.scores[username] === undefined) {
+      this.noOfUsers += 1;
+    }
+    this.scores[username] = 0;
   }
 
   /**
@@ -40,6 +52,32 @@ class Guess extends EventEmitter {
       this.actual = Math.floor(Math.random() * 26);
       this.notifier.on('answer', this.handleAnswer.bind(this));
     }, this.notifyTime * 1000);
+    setTimeout(this.evaluateAndEnd.bind(this, true), this.totalTime * 1000);
+  }
+
+  /**
+   * scores evaluation
+   * @param {boolean} timesup - if triggered upon timesup
+   */
+  evaluateAndEnd(timesUp) {
+    if (!this.ended) {
+      this.ended = true;
+      let max;
+      let user;
+      for (let ky in this.scores) {
+        if (max === undefined) {
+          max = this.scores[ky];
+          user = ky;
+        } else {
+          if (this.scores[ky] > max) {
+            user = ky;
+            max = this.scores[ky];
+          }
+        }
+        this.emit('score', ky, this.scores[ky], timesUp);
+      }
+      this.emit('end', user, this.actual, max, timesUp);
+    }
   }
 
   /**
@@ -54,11 +92,9 @@ class Guess extends EventEmitter {
         this.scores[user] -= 2;
       } else if (num === this.actual) {
         this.scores[user] += num;
+        return this.evaluateAndEnd();
       } else {
         this.scores[user] -= Math.abs(num - this.actual);
-      }
-      if (this.scores[user] >= 10) {
-        this.emit('end', user, this.actual);
       }
     }
   }

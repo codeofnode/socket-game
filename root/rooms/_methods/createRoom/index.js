@@ -4,11 +4,14 @@ module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VA
   const noOfPlayers = GLOBAL_APP_CONFIG.noOfPlayers || 2;
 
   function func(vars, methods, req, res, next) {
-    GLOBAL_APP_CONFIG.$store.write('room', vars.params.body.roomName, {
-      createdBy: vars.user,
+    const data = {
+      createdBy: vars.currentuser,
       noOfPlayers,
       gameName: vars.params.body.gameName,
-    }).then(next);
+    };
+    GLOBAL_APP_CONFIG.$store.write('room', vars.params.body.roomName, data)
+      .then(() => next(data))
+      .catch(er => next(er.message, 500));
   }
 
   return func;

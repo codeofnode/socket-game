@@ -6,7 +6,7 @@
   "scripts": {
     "start": "./node_modules/.bin/nodemon --watch root --exec \"./node_modules/.bin/babel-node ./node_modules/.bin/json2server\"",
     "bstart": "./node_modules/.bin/nodemon blocks --exec node_modules/.bin/babel-node",
-    "client": "node_modules/.bin/babel-node client",
+    "client": "./node_modules/.bin/babel-node blocks && node_modules/.bin/babel-node modules/client",
     "build": "rm -rf dist && mkdir dist && mkdir dist/root && ./node_modules/.bin/json -f package.json -e \"delete this.devDependencies;delete this.scripts;delete this.nyc;delete this.babel; this.scripts = { start: './node_modules/.bin/json2server', client: 'node client' };\" > dist/package.json && ./node_modules/.bin/babel root -d dist/root && node_modules/.bin/babel-node blocks && cp README.md server.json j2s.json dist/ && npm run mbuild && mv dist/modules/client dist/client && mv client.json dist/client/package.json && mv j2c.json dist/client/",
     "mbuild": "mkdir -p dist/modules && ./node_modules/.bin/babel modules -d dist/modules",
     "prodtest": "TEST_DIR=dist/root npm run test",

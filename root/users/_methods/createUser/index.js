@@ -9,7 +9,7 @@ module.exports = function MainBlock(GLOBAL_APP_CONFIG, GLOBAL_METHODS, GLOBAL_VA
   }
 
   function func(vars, methods, req, res, next) {
-    main.then(next).catch(next.bind(res, 500));
+    main(vars, res).then(next).catch(next.bind(res, 500));
   }
 
   return func;
