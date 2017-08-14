@@ -18,15 +18,8 @@ let Socket;
 let Answer;
 
 function playWithSocket() {
-  Socket = io(`${configJson.connectionUrl}/${RoomName}`, {
-    transportOptions: {
-      polling: {
-        extraHeaders: {
-          'x-user': UserName
-        }
-      }
-    }
-  });
+  Socket = io(`${configJson.connectionUrl}/${RoomName}`,
+    { transportOptions: { polling: { extraHeaders: { 'x-user': UserName } } } });
   Socket.on('connect', () => process.stdout.write('\nGreat, We are connected now.'));
   Socket.on('start', int => process.stdout.write(`\nHeads Up, Get Ready, Wait is over. We got the users. A question will be asked in ${int} seconds.`));
   Socket.on('question', qs => process.stdout.write(`\n${qs}\n`));
@@ -41,7 +34,7 @@ function playWithSocket() {
     process.stdout.write(`\nMax Score : ${max} \n Cheers.`);
   });
   Socket.on('disconnect', () => {
-    process.stdout.write('\nBy By\n')
+    process.stdout.write('\nBy By\n');
     process.exit(0);
   });
 }
@@ -86,7 +79,7 @@ function main(input) {
       return createUser(data).catch(catchError);
     }
     if (!GameName) {
-      GameName = Games[Number(data)-1];
+      GameName = Games[Number(data) - 1];
       if (!GameName) return catchError('Invalid game selected.!');
       RoomName = GameName; // let's consider for sake of experiment
       return SelectGame().catch(catchError);

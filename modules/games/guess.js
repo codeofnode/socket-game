@@ -64,18 +64,16 @@ class Guess extends EventEmitter {
       this.ended = true;
       let max;
       let user;
-      for (let ky in this.scores) {
+      Object.keys(this.scores).forEach((ky) => {
         if (max === undefined) {
           max = this.scores[ky];
           user = ky;
-        } else {
-          if (this.scores[ky] > max) {
-            user = ky;
-            max = this.scores[ky];
-          }
+        } else if (this.scores[ky] > max) {
+          user = ky;
+          max = this.scores[ky];
         }
         this.emit('score', ky, this.scores[ky], timesUp);
-      }
+      });
       this.emit('end', user, this.actual, max, timesUp);
     }
   }
@@ -92,7 +90,7 @@ class Guess extends EventEmitter {
         this.scores[user] -= 2;
       } else if (num === this.actual) {
         this.scores[user] += num;
-        return this.evaluateAndEnd();
+        this.evaluateAndEnd();
       } else {
         this.scores[user] -= Math.abs(num - this.actual);
       }
